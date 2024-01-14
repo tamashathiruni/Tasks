@@ -11,13 +11,40 @@
     <div class="container">
         <div class="text-center">
             <h2>Daily Tasks</h2>
-            <input type="text" class="form-control" placeholder="Enter Your Task Here">
+            <!--validation -->
+            @foreach($errors->all() as $error)
+            <div class="alert alert-danger" role="alert">
+                {{$error}}
+            </div>
+            @endforeach
+            <form action="/saveTask" method="post">
+            {{ csrf_field() }} <!--encrypt data -->
+            <input type="text" class="form-control" placeholder="Enter Your Task Here" name="task">
             <br>
-            <input type="button" class="btn btn-primary" value="Save">
+            <input type="submit" class="btn btn-primary" value="Save">
             <input type="button" class="btn btn-warning" value="Clear">
-            <br>
+            </form>
+            <br><br>
             <table class="table table-dark">
-                
+                <th>ID</th>
+                <th>Task</th>
+                <th>Completed</th>
+                <th>Action</th>
+                @foreach($tasks as $task)
+                <tr>
+                    <td>{{$task->id}}</td>
+                    <td>{{$task->task}}</td>
+                    <td>
+                    @if($task->iscompleted)
+                    <!--<td>{{$task->iscompleted}}</td>-->
+                    <button class="btn btn-success">Completed</button>
+                    @else
+                    <button class="btn btn-warning">Not Completed</button>
+                    @endif
+                   </td>
+                   <td><a href="#" class="btn btn-primary">Mark as Completed</a></td>
+                </tr>
+                @endforeach
             </table>
         </div>
         <!--<div class="img">

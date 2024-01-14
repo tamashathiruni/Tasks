@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TaskController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,5 +25,8 @@ Route::get('/index', function () {
 Route::get('/about', 'PagesController@indexabout');
 
 Route::get('/tasks',function (){
-    return view('FrontEnds/tasks');
+    $data=App\Models\Task::all();
+    return view('FrontEnds/tasks')->with('tasks',$data);
 });
+
+Route::post('/saveTask', [TaskController::class, 'store']);
